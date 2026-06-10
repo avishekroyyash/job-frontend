@@ -1,9 +1,20 @@
+import Banner from "@/Component/Banner";
+import FindJob from "@/Component/FindJob";
+import JobFeature from "@/Component/JobFeature";
+import JobPricing from "@/Component/JobPricing";
+import JobRule from "@/Component/JobRule";
+import LookingJob from "@/Component/LookingJob";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      <h1 className="text-7xl text-green-800 font-bold text-center">This is job home page </h1>
+      <FindJob></FindJob>
+     <Banner></Banner>
+     <JobRule></JobRule>
+     <JobFeature></JobFeature>
+     <JobPricing></JobPricing>
+     <LookingJob></LookingJob>
     </div>
   );
 }
