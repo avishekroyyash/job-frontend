@@ -11,7 +11,7 @@ import {
     FaEye,
     FaEyeSlash,
 } from "react-icons/fa";
-import { TbChevronsDownLeft } from "react-icons/tb";
+import {Description, Label, Radio, RadioGroup} from "@heroui/react";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -29,16 +29,18 @@ const RegisterPage = () => {
             name: form.name.value,
             email: form.email.value,
             password: form.password.value,
+            role:form.role.value,
         };
         console.log(userData);
         
         const { data, error } = await authClient.signUp.email({
     name: userData.name, // required
     email: userData.email, // required
+     role:userData.role,
     password: userData.password, // required
     callbackURL: "/",
 });
-//  console.log("DATA",data)
+  console.log("DATA",data)
 //  console.log("ERROR",error)
  if(!error){
     toast.success('User Resister Successfully')
@@ -183,6 +185,33 @@ const RegisterPage = () => {
                                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
+
+ <div className="flex flex-col gap-4">
+      <Label>Subscription plan</Label>
+      <RadioGroup defaultValue="seeker" name="role" orientation="horizontal">
+        <Radio value="seeker">
+          <Radio.Control>
+            <Radio.Indicator />
+          </Radio.Control>
+          <Radio.Content>
+            <Label>Job Seeker</Label>
+            <Description>Job getter</Description>
+          </Radio.Content>
+        </Radio>
+
+        <Radio value="recruter">
+          <Radio.Control>
+            <Radio.Indicator />
+          </Radio.Control>
+          <Radio.Content>
+            <Label>Recruter</Label>
+            <Description>Job giver</Description>
+          </Radio.Content>
+        </Radio>
+      
+      </RadioGroup>
+    </div>
+
 
                             <Button
                                 type="submit"
