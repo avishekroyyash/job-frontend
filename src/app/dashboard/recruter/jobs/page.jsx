@@ -2,10 +2,13 @@ import { getJobById } from '@/lib/api/recruter-jobs';
 import React from 'react';
 import { Table, Chip, Button, Tooltip } from "@heroui/react";
 import { FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { getLoggedInRecruterCompany } from '@/lib/api/recruter-company';
 
-const RecruterJobs =async() => {
-    const companyId= 'company_123'
-    const allJobs = await getJobById(companyId)
+const RecruterJobsTable =async() => {
+    // const companyId= 'company_123'
+    const company = await getLoggedInRecruterCompany()
+    // console.log(company,'this is company of recrtuter table ')
+     const allJobs = await getJobById(company._id)
     ///console.log(allJobs)
      const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -105,4 +108,4 @@ const RecruterJobs =async() => {
     );
 };
 
-export default RecruterJobs;
+export default RecruterJobsTable;
