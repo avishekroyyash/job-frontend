@@ -10,7 +10,7 @@ import { signOut, useSession } from "@/lib/auth-client";
 const NAV_ITEMS = [
   { label: "Browse Jobs", href: "/jobs",    icon: <FiBriefcase size={16} /> },
   { label: "Company",     href: "/company", icon: <FiGrid      size={16} /> },
-  { label: "Pricing",     href: "/pricing", icon: <FiDollarSign size={16} /> },
+  { label: "Pricing",     href: "/plan", icon: <FiDollarSign size={16} /> },
 ];
 
 export default function Navbar() {

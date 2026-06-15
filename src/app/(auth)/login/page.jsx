@@ -12,9 +12,20 @@ import {
 } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter()
+
+
+
+    //after login redirect to apply company page
+    const searchParams = useSearchParams();
+    // console.log(searchParams,'this is search params form login page');
+    const redirectTo = searchParams.get('redirect') || '/'
+    //  console.log(redirectTo,'this is from login page redirect to ')
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,20 +35,22 @@ const LoginPage = () => {
         const loginData = {
             email: form.email.value,
             password: form.password.value,
+             
         };
 
-        console.log(loginData);
+        // console.log(loginData);
 
         const { data, error } = await authClient.signIn.email({
     email: loginData.email, // required
     password: loginData.password, // required
     rememberMe: true,
-    callbackURL: "/",
+  
 });
 //  console.log("DATA",data)
 //  console.log("ERROR",error)
  if(!error){
     toast.success('User Login Successfully')
+     router.push(redirectTo)
  }
         // Send data to backend
         // const res = await fetch("/api/login", {
@@ -214,7 +227,7 @@ const LoginPage = () => {
                         <p className="text-center text-sm text-slate-400 mt-8">
                             Don't have an account?
                             <Link
-                                href="/register"
+                                href={`/resister?redirect=${redirectTo}`}
                                 className="ml-2 text-blue-400 font-semibold hover:text-blue-300"
                             >
                                 Create Account

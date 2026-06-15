@@ -14,14 +14,22 @@ import {
 import {Description, Label, Radio, RadioGroup} from "@heroui/react";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const RegisterPage = () => {
     const router = useRouter()
     const [showPassword, setShowPassword] = useState(false);
 
+
+    //if user dont login then login and go application page 
+    const searchParams = useSearchParams()
+    // console.log(searchParams,'this is search params form resister page');
+    const redirectTo = searchParams.get('redirect') || '/login'
+    // console.log(redirectTo,'this is from resister page redirect to ')
+
     const handleSubmit = async(e) => {
         e.preventDefault();
+        
 
         const form = e.target;
 
@@ -30,21 +38,27 @@ const RegisterPage = () => {
             email: form.email.value,
             password: form.password.value,
             role:form.role.value,
+
         };
-        console.log(userData);
+         console.log(userData);
+        
+          //set plan of money
+        const plan = userData.role === 'seeker' ? 'seeker_free' : 'recruiter_free'
+  
+
         
         const { data, error } = await authClient.signUp.email({
     name: userData.name, // required
     email: userData.email, // required
      role:userData.role,
     password: userData.password, // required
-    callbackURL: "/",
+    plan,
 });
   console.log("DATA",data)
 //  console.log("ERROR",error)
  if(!error){
     toast.success('User Resister Successfully')
-    router.push('/login')
+    router.push(redirectTo)
  }
         // Send data to database
         // await fetch("/api/register", {
@@ -246,7 +260,7 @@ const RegisterPage = () => {
                         <p className="text-center text-sm text-slate-400 mt-8">
                             Already have an account?
                             <Link
-                                href="/login"
+                                href={`/login?redirect=${redirectTo}`}
                                 className="ml-2 text-blue-400 font-semibold hover:text-blue-300"
                             >
                                 Sign In
