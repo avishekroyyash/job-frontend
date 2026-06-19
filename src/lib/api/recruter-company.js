@@ -1,6 +1,11 @@
 import { serverFetch } from "../core/server"
 import { getUserSession } from "../core/session"
 
+
+export const getAdminCompany = ()=>{
+    return serverFetch(`/api/companies`)
+}
+
 export const getRecruterCompany = (recruiterId)=>{
     // console.log(recruiterId,'this is reqruter id from recruter-company.js get')
     return serverFetch(`/api/my/companies?recruiterId=${recruiterId}`)

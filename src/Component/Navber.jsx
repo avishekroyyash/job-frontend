@@ -7,18 +7,39 @@ import { FiMenu, FiX, FiBriefcase, FiGrid, FiDollarSign } from "react-icons/fi";
 import logo from '../../public/images/logo.png'
 import { signOut, useSession } from "@/lib/auth-client";
 
-const NAV_ITEMS = [
+
+
+
+
+export default function Navbar() {
+
+  const NAV_ITEMS = [
   { label: "Browse Jobs", href: "/jobs",    icon: <FiBriefcase size={16} /> },
   { label: "Company",     href: "/company", icon: <FiGrid      size={16} /> },
   { label: "Pricing",     href: "/plan", icon: <FiDollarSign size={16} /> },
 ];
 
-export default function Navbar() {
+
+
   const [open, setOpen] = useState(false);
 
   const {data} = useSession()
   const user = data?.user
   // console.log(user);
+
+
+  const dashboardLinks = {
+  seeker:'/dashboard/seeker',
+  recruter:'/dashboard/recruter',
+  admin:'/dashboard/admin',
+}
+
+if(user?.email){
+  NAV_ITEMS.push({
+    label:"DashBoard",
+    href:dashboardLinks[user?.role || 'seeker']
+  })
+}
 
   return (
     <header className="w-full sticky top-0 z-50 bg-[#111214] border-b border-white/[0.07]">
