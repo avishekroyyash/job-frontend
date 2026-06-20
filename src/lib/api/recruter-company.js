@@ -1,9 +1,9 @@
-import { serverFetch } from "../core/server"
+import { protectedFetch, serverFetch } from "../core/server"
 import { getUserSession } from "../core/session"
 
 
 export const getAdminCompany = ()=>{
-    return serverFetch(`/api/companies`)
+    return protectedFetch(`/api/companies`)
 }
 
 export const getRecruterCompany = (recruiterId)=>{

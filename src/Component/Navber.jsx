@@ -25,7 +25,8 @@ export default function Navbar() {
 
   const {data} = useSession()
   const user = data?.user
-  // console.log(user);
+  // console.log(data,"data");
+  //   console.log(user,"user");
 
 
   const dashboardLinks = {
